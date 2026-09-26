@@ -1,4 +1,4 @@
-import cv2 # на удивление в некоторых местах очень похоже на то что было с подводной камерой
+import cv2
 import numpy as np
 
 drawing = False  
@@ -87,7 +87,7 @@ while True:
             contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
             if len(contours) > 0:
-                # эталонеее
+                # Эталонный круг
                 M = cv2.moments(contours[0])
                 if M["m00"] != 0:
                     center_x = int(M["m10"] / M["m00"])
@@ -109,7 +109,7 @@ while True:
                     cv2.circle(reference_mask, center, radius, 255, -1)
 
                     # Объединяем маски пользователя и эталонного круга
-                    combined_mask = cv2.bitwise_or(user_mask, reference_mask)#bitwise_or крутая тема спомощью этого я убрал противную серость 
+                    combined_mask = cv2.bitwise_or(user_mask, reference_mask)
 
                     # Создаем маски для отклонений
                     deviation_mask_red = np.zeros_like(display_canvas)  
@@ -129,13 +129,13 @@ while True:
                     display_canvas = cv2.addWeighted(deviation_mask_red, alpha, display_canvas, 1 - alpha, 0)
                     display_canvas = cv2.addWeighted(deviation_mask_blue, alpha, display_canvas, 1 - alpha, 0)
 
-                    # я так избавился от противной серости
+                    # Заливаем фон белым вокруг обоих кругов
                     background_mask = cv2.bitwise_not(combined_mask)
                     display_canvas[background_mask == 255] = (255, 255, 255)
 
                     # Вычисление метрик
                     deviations = [abs(np.sqrt((point[0] - center[0])**2 + (point[1] - center[1])**2) - radius) for point in points]
-                    rmse = np.sqrt(np.mean(np.square(deviations)))  # Сред
+                    rmse = np.sqrt(np.mean(np.square(deviations)))  # Среднеквадратичное отклонение
                     max_deviation = np.max(deviations)  
 
                     # Отношение площадей
