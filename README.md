@@ -1,5 +1,7 @@
 # Perfect Circle: a Computer Vision Mini-Game
 
+> **Take-home test assignment for a job interview** (computer vision). The final solution is at the top level; the development history is in [`drafts/`](drafts).
+
 Draw a circle with your mouse and get an objective score of how close it is to a perfect one. The drawing is analysed with classic computer vision: contour extraction, image moments and shape metrics.
 
 ## How it works
@@ -33,6 +35,10 @@ Hold the left mouse button to draw, release to get the score, and press **`q`** 
 |---|---|
 | `perfect_circle.py` | The game (recommended entry point) |
 | `circle.ipynb` | Notebook version used during development |
+
+## Development process
+
+This was a take-home task for a job interview. [`drafts/`](drafts) keeps the successive versions of the game (`1.py` → `5.py`, plus an "improved" variant): from simply drawing on the canvas to fitting the reference circle, highlighting deviations and adding the quality metrics used in the final `perfect_circle.py`.
 
 ## Tech stack
 
